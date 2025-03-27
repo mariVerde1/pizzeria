@@ -2,6 +2,7 @@
 
 {% block content %}
 <!--App/Presentation/bestellingBevestiging.twig-->
+{% if klant  %}
 <h1>Bestelling Bevestigd</h1>
 
 <div class="bevestiging-container">
@@ -16,6 +17,6 @@
     <a href="index.php?action=home" class="terug-knop">Terug naar home</a>
     <a href="index.php?action=uitloggen" class="uitloggen-knop">Uitloggen</a>
 </div>
-
+{% endif %}
 
 {% endblock %}

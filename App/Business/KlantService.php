@@ -10,13 +10,6 @@ class KlantService
 {
 
 
-    /*public function registreerKlant($naam, $voornaam, $adres, $postcode, $gemeente, 
-    $telefoon, $email, $wachtwoord, $promotieRecht): Klant
-    {
-        $this->klantDAO->create($naam, $voornaam, $adres, 
-        $postcode, $gemeente, $telefoon, $email, 
-        $wachtwoord, $promotieRecht);
-    }*/
 
     public function registreerKlant(
         string $naam,
@@ -30,7 +23,7 @@ class KlantService
         bool $promotieRecht
     ): void {
         $klantDAO = new KlantDAO();
-        $wachtwoordHash = md5($wachtwoord); // MD5-hash voor demo-doeleinden (gebruik in productie bcrypt of Argon2)
+        $wachtwoordHash = md5($wachtwoord); 
         $klantDAO->create(
             $naam,
             $voornaam,
@@ -43,7 +36,7 @@ class KlantService
             $promotieRecht
         );
     }
-
+    
 
 
     public function login(string $email, string $wachtwoord): ?Klant {
@@ -51,15 +44,20 @@ class KlantService
         $klant = $klantDAO->getByEmail($email);
         
         if ($klant) {
-           
+            
             if (md5($wachtwoord) === $klant->getWachtwoord()) {
+                
+                $_SESSION['klant'] = [
+                    'id' => $klant->getKlantID(),
+                    'isIngelogd' => true
+                ];
                 return $klant;
             }
         }
         
         return null;
     }
-public function getKlantById($klantID) {
+    public function getKlantById($klantID) {
     $klantDAO = new KlantDAO();
     $klant = $klantDAO->getById($klantID);
     return $klant;

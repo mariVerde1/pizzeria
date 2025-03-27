@@ -130,10 +130,15 @@ if (isset($_GET["action"]) && ($_GET["action"] === "winkelmandje")) {
         'totaal' => $totaal,
         'isIngelogd' => isset($_SESSION['klant'])
     ]);
-}
+   
+
+} 
+
+
 
 
 if (isset($_POST["action"]) && ($_POST["action"] === "plaatsBestelling")) {
+    
 
     if (!isset($_SESSION['klant']) || !$_SESSION['klant']->isIngelogd()) {
         header('Location: index.php?action=login');
@@ -144,28 +149,30 @@ if (isset($_POST["action"]) && ($_POST["action"] === "plaatsBestelling")) {
     if (!isset($_SESSION['winkelmandje']) || empty($_SESSION['winkelmandje'])) {
         header('Location: index.php?action=pizzas');
         exit();
-    } 
+    }
 
-    if (isset($_SESSION['klant']) || $_SESSION['klant']->isIngelogd()) {
-        if (isset($_SESSION['winkelmandje'])) {
-            $klant = $_SESSION['klant']->getKlantID();
 
-            foreach ($klant as $klantId) {
-                $klant = $klantService->getKlantById($klantId);
-                if ($klant) {
-                    $info[] = [
-                        'id' => $klant->getKlantID(),
-                        'naam' => $klant->getNaam(),
-                        'voornaam' => $klant->getVoornaam(),
-                        'adres' => $klant->getAdres(),
-                        'postcode' => $klant->getPostcode(),
-                        'gemeente' => $klant->getGemeente(),
-                        'gsm' => $klant->getGsm(),
-                        'email' => $klant->getEmail(),
+    $winkelmandje = $_SESSION['winkelmandje'] ?? [];
+    if (isset($_SESSION['klant'])) {
 
-                    ];
-                }
-            
+        $klant = $_SESSION['klant']->getKlantID();
+
+        foreach ($klant as $klantId) {
+            $klant = $klantService->getKlantById($klantId);
+            if ($klant) {
+                $info[] = [
+                    'id' => $klant->getKlantID(),
+                    'naam' => $klant->getNaam(),
+                    'voornaam' => $klant->getVoornaam(),
+                    'adres' => $klant->getAdres(),
+                    'postcode' => $klant->getPostcode(),
+                    'gemeente' => $klant->getGemeente(),
+                    'gsm' => $klant->getGsm(),
+                    'email' => $klant->getEmail(),
+
+                ];
+            }
+            var_dump($klant);
             $winkelmandje = $_SESSION['winkelmandje'] ?? [];
             $pizzas = $pizzaService->haalAllePizzasOp();
             $winkelmandjeInhoud = [];
@@ -187,7 +194,7 @@ if (isset($_POST["action"]) && ($_POST["action"] === "plaatsBestelling")) {
             //$bestellingId = $bestellingService->maakBestellingAan($klantId, $pizzas);
 
 
-            //unset($_SESSION['winkelmandje']);
+            unset($_SESSION['winkelmandje']);
 
             // Toon bevestiging
             echo $twig->render('bestellingBevestiging.twig', [
@@ -200,14 +207,7 @@ if (isset($_POST["action"]) && ($_POST["action"] === "plaatsBestelling")) {
             exit();
         }
     }
-} else { 
-    header('Location: ?action=home');
-    exit();
-
-}}
-
-
-  
+}
 
 
 
@@ -223,7 +223,12 @@ if (isset($_POST["action"]) && ($_POST["action"] === "plaatsBestelling")) {
 
 
 
-    
+
+
+
+
+
+
 
 
 

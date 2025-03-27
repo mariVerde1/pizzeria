@@ -1,4 +1,5 @@
 <?php
+//index.php
 declare(strict_types=1);
 
 
@@ -9,16 +10,39 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use App\Business\PizzaService;
+use App\Business\KlantService;
+
+
 
 
 $loader = new FilesystemLoader(__DIR__ . '/App/Presentation');
 $twig = new Environment($loader);
+$pizzaService = new PizzaService();
 
-try {
     $action = $_GET['action'] ?? 'home';
 
     switch ($action) {
         case 'home':
+            if (isset($_SESSION['klant'])) {
+                $klantService = new KlantService();
+                $pizzas = $pizzaService->haalAllePizzasOp();
+                $klantInfo = $klantService->getKlantById($_SESSION['klant']['id']);
+                echo $twig->render('home.twig', [
+                    'pizzas' => $pizzas,
+                    'klant' => $_SESSION['klant'],
+                    'isIngelogd' => isset($_SESSION['klant'])
+                ]);
+                exit();
+            } else {
+                $pizzas = $pizzaService->haalAllePizzasOp();
+                echo $twig->render('home.twig', [
+                    'pizzas' => $pizzas
+                ]);
+                exit();
+
+            }
+            
         case 'pizzas':
         case 'voegToe':
             include __DIR__ . '/PizzaController.php';
@@ -32,11 +56,16 @@ try {
         case 'afrekenen':
         case 'updateAantal':
         case 'verwijder':
-        case 'plaatsBestelling':
             include __DIR__ . '/BestellingController.php';
             break;
+        case 'plaatsBestelling':
+            echo $twig->render('bestellingBevestiging.twig', [
+                
+            ]);
+            exit();
 
-        case 'bestellingOverzicht':
+
+        
         case 'login': //loginForm tonen
         case 'registreren': // actie knop 
         case 'registreer': //form tonen
@@ -46,15 +75,10 @@ try {
             break;
 
         default:
-            http_response_code(404);
-            echo $twig->render(htmlentities($_SERVER["PHP_SELF"]));
-            exit();
+           
+        header('Location: index.php?action=home');
+        exit();
     }
-
-} catch (Exception $e) {
-    error_log($e->getMessage());
-    echo $twig->render(htmlentities($_SERVER["PHP_SELF"]), ['message' => 'An error occurred']);
-}
 
 
 

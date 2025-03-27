@@ -17,6 +17,27 @@ $pizzaService = new PizzaService();
 
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
+        case 'home':
+            if (isset($_SESSION['klant'])) {
+                $klantService = new KlantService();
+                $pizzas = $pizzaService->haalAllePizzasOp();
+                $klantInfo = $klantService->getKlantById($_SESSION['klant']['id']);
+                echo $twig->render('home.twig', [
+                    'pizzas' => $pizzas,
+                    'klant' => $_SESSION['klant'],
+                    'isIngelogd' => isset($_SESSION['klant'])
+                ]);
+                exit();
+            } else {
+                $pizzas = $pizzaService->haalAllePizzasOp();
+                echo $twig->render('home.twig', [
+                    'pizzas' => $pizzas
+                ]);
+                exit();
+
+            }
+
+
         case 'pizzas':
             $pizzas = $pizzaService->haalAllePizzasOp();
             if (isset($_SESSION['klant'])) {
@@ -61,25 +82,26 @@ if (isset($_GET['action'])) {
             break;
 
         default:
-        if (isset($_SESSION['klant'])) {
-            $klantService = new KlantService();
-            $klantInfo = $klantService->getKlantById($_SESSION['klant']['id']);
-            $pizzas = $pizzaService->haalAllePizzasOp();
-            echo $twig->render('home.twig', [
-                'pizzas' => $pizzas,
-                'klant' => $_SESSION['klant'],
-                'isIngelogd' => isset($_SESSION['klant'])
-            ]);
-            exit();
-        } else {
-            $pizzas = $pizzaService->haalAllePizzasOp();
-            echo $twig->render('home.twig', [
-            'pizzas' => $pizzas]);
-            
-            exit();
-    
-        }
+            if (isset($_SESSION['klant'])) {
+                $klantService = new KlantService();
+                $klantInfo = $klantService->getKlantById($_SESSION['klant']['id']);
+                $pizzas = $pizzaService->haalAllePizzasOp();
+                echo $twig->render('home.twig', [
+                    'pizzas' => $pizzas,
+                    'klant' => $_SESSION['klant'],
+                    'isIngelogd' => isset($_SESSION['klant'])
+                ]);
+                exit();
+            } else {
+                $pizzas = $pizzaService->haalAllePizzasOp();
+                echo $twig->render('home.twig', [
+                    'pizzas' => $pizzas
+                ]);
+
+                exit();
+
+            }
 
 
-}
+    }
 }

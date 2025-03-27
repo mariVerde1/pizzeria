@@ -12,12 +12,25 @@ use App\Data\PizzaDAO;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+
 $loader = new FilesystemLoader(__DIR__ . '/App/Presentation');
 $twig = new Environment($loader);
 $klantService = new KlantService();
 
 if (isset($_GET["action"]) && ($_GET["action"] === "login")) {
-    echo $twig->render('login.twig');
+    if (isset($_SESSION['klant'])) {
+        $klantService = new KlantService();
+        $klantInfo = $klantService->getKlantById($_SESSION['klant']['id']);
+        echo $twig->render('login.twig', [
+            'klant' => $_SESSION['klant'],
+            'isIngelogd' => isset($_SESSION['klant'])
+        ]);
+        exit();
+    } else {
+        echo $twig->render('login.twig', []);
+        exit();
+
+    }
 }
 
 if (isset($_GET["action"]) && ($_GET["action"] === "registreer")) {
@@ -78,16 +91,14 @@ if (isset($_GET["action"]) && $_GET["action"] === "inloggen") {
                         'isIngelogd' => isset($_SESSION['klant'])
                     ]);
                 } else {
-                    header('Location: ?action=winkelmandje');
+                    header('Location: index.php?action=winkelmandje');
                     exit();
                 }
             }
         }
     }
-
-
-
 }
+
 
 if (isset($_GET["action"]) && ($_GET["action"] === "registreren")) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -98,8 +109,8 @@ if (isset($_GET["action"]) && ($_GET["action"] === "registreren")) {
         $gemeente = $_POST['gemeente'];
         $gsm = $_POST['gsm'];
         $email = $_POST['email'];
-        $wachtwoord = md5($_POST['wachtwoord']);
-        $herhaalWachtwoord = md5($_POST['herhaalWachtwoord']);
+        $wachtwoord = $_POST['wachtwoord'];
+        $herhaalWachtwoord = $_POST['herhaalWachtwoord'];
         $promotieRecht = isset($_POST['promotieRecht']);
 
         $klantService->registreerKlant(
@@ -113,19 +124,60 @@ if (isset($_GET["action"]) && ($_GET["action"] === "registreren")) {
             $wachtwoord,
             $promotieRecht
         );
-        echo $twig->render('bestellingOverzicht.twig');
-        exit();
-    } else {
-        echo $twig->render('registreren.twig');
-    }
-}
 
-if (isset($_GET["action"]) && $_GET["action"] === "uitloggen") {
-    unset($_SESSION['klant']);
-    header("Location: index.php");
-    exit();
-}
+       
+                $klant = $klantService->login($email, $wachtwoord);
+                $_SESSION['klant'] = $klant; 
 
+                if (isset($_SESSION['klant'])) {
+                    $klantService = new KlantService();
+                    $pizzas = $pizzaService->haalAllePizzasOp();
+                    $klantInfo = $klantService->getKlantById($_SESSION['klant']['id']);
+                    echo $twig->render('bestellingOverzicht.twig', [
+                        'pizzas' => $pizzas,
+                        'klant' => $_SESSION['klant'],
+                        'isIngelogd' => isset($_SESSION['klant'])
+                    ]);
+                    exit();
+                } else {
+                    header("Location: index.php?action=winkelmandje");
+                    exit();
+                
+                }}} else { 
+                    header("Location: index.php?action=registreer&error=login_failed");
+                    exit();
+
+                }
+
+
+
+
+
+
+        
+                /*if ($klant) {
+                    $_SESSION['klant'] = $klant; 
+                    
+                    $_SESSION['winkelmandje'] = $_SESSION['winkelmandje'] ?? []; // Initialize cart if not exists
+                    
+                    
+                    header("Location: index.php?action=winkelmandje");
+                    exit();
+                } else {
+                   
+                    header("Location: index.php?action=registreer&error=login_failed");
+                    exit();*/
+                
+        
+        
+        if (isset($_GET["action"]) && $_GET["action"] === "uitloggen") {
+            unset($_SESSION['klant']);
+            header("Location: index.php?action=home");
+            exit();
+        }
+        
+        
+       
 
 
 
