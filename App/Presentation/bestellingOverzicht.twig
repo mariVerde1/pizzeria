@@ -1,0 +1,38 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<!--App/Presentation/bestellingOverzicht.twig-->
+<h1>Bestelling Overzicht</h1>
+{% if klant %}
+    <div class="welcome">Welkom, {{ klant.voornaam }}!</div>
+{% endif %}
+
+<div class="bestelling-container">
+    <div class="klant-gegevens">
+        <h2>Uw gegevens</h2>
+        <p><strong>Naam:</strong> {{ klant.voornaam }} {{ klant.naam }}</p>
+        <p><strong>Adres:</strong> {{ klant.adres }}, {{ klant.postcode }}   {{ klant.gemeente }}</p>
+        <p><strong>Gsm:</strong> {{ klant.gsm }}</p>
+        <p><strong>Email:</strong> {{ klant.email }}</p>
+        <p><strong>Opmerking:</strong> </p>
+    </div>
+
+    <div class="bestelling-details">
+        <h2>Uw bestelling</h2>
+        <ul>
+            {% for item in winkelmandje %}
+                <li>{{ item.aantal }} x {{ item.naam }} - €{{ item.prijs * item.aantal }}</li>
+            {% endfor %}
+        </ul>
+        <p class="totaal"><strong>Totaal:</strong> €{{ totaal|number_format(2, ',', '.') }}</p>
+    </div><br>
+    <a href="index.php?action=winkelmandje" class="knop">Bestelling Aanpassen</a>
+
+    <a href="index.php?action=pizzas" class="knop">Verder winkelen</a><br><br>
+    <form action="index.php?action=plaatsBestelling" method="post">
+        <button type="submit" class="bevestig-knop">Bestelling bevestigen</button>
+    </form>
+</div>
+
+
+{% endblock %}

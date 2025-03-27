@@ -1,0 +1,42 @@
+
+{% extends 'base.twig' %}
+
+{% block content %}
+<!--App/Presentation/registreren.twig-->
+<section class="registreren">
+    <h1>Registreren</h1>
+    <form action="index.php?action=registreren" method="post">
+        <label for="naam">Naam:</label>
+        <input type="text" id="naam" name="naam" required><br>
+
+        <label for="voornaam">Voornaam:</label>
+        <input type="text" id="voornaam" name="voornaam" required><br>
+
+        <label for="adres">Adres:</label>
+        <input type="text" id="adres" name="adres" required><br>
+
+        <label for="postcode">Postcode:</label>
+        <input type="text" id="postcode" name="postcode" required><br>
+
+        <label for="gemeente">Gemeente:</label>
+        <input type="text" id="gemeente" name="gemeente" required><br>
+
+        <label for="gsm">Gsm:</label>
+        <input type="text" id="gsm" name="gsm" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="wachtwoord">Wachtwoord:</label>
+        <input type="password" id="wachtwoord" name="wachtwoord" required><br>
+
+        <label for="wachtwoord">Herhaal Wachtwoord:</label>
+        <input type="password"  id="herhaalWachtwoord" name="herhaalWachtwoord"><br> 
+
+        <label for="promotieRecht">Promotie ontvangen?</label>
+        <input type="checkbox" id="promotieRecht" name="promotieRecht"><br>
+
+        <button type="submit">Registreer</button>
+    </form>
+</section>
+{% endblock %}

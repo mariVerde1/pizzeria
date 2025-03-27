@@ -1,0 +1,21 @@
+
+{% extends 'base.twig' %}
+
+
+
+{% block content %}
+<!--App/Presentation/login.twig-->
+ <section class="login">
+    <h2>Login</h2>
+    {% if foutmelding %}
+        <div class="error">{{ foutmelding }}</div>
+    {% endif %}
+    <form action="index.php?action=inloggen" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="wachtwoord">Wachtwoord:</label>
+        <input type="password" id="wachtwoord" name="wachtwoord" required>
+        <button type="submit" class="knop">Inloggen</button>
+    </form>
+</section>
+{% endblock %}

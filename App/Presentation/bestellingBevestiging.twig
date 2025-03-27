@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<!--App/Presentation/bestellingBevestiging.twig-->
+<h1>Bestelling Bevestigd</h1>
+
+<div class="bevestiging-container">
+    <div class="bevestiging-bericht">
+        <h2>Bedankt voor uw bestelling!</h2>
+        <p>Uw bestelling is succesvol ontvangen en wordt zo snel mogelijk verwerkt.</p>
+        <p>U ontvangt een bevestigingsmail op  {{ klant.email }}</strong>.</p><br><br><br>
+        <p>Tot ziens!</p><br><br>
+    </div>
+
+
+    <a href="index.php?action=home" class="terug-knop">Terug naar home</a>
+    <a href="index.php?action=uitloggen" class="uitloggen-knop">Uitloggen</a>
+</div>
+
+
+{% endblock %}

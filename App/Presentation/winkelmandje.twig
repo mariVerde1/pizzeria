@@ -1,0 +1,45 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<!--App/Presentation/winkelmandje.twig-->
+<h1>Winkelmandje</h1>
+{% if winkelmandje is empty %}
+<p>Je winkelmandje is leeg.</p>
+<a href="index.php?action=pizzas" class="toevoegen-knop">Bestel hier je favorite pizza's</a>
+{% else %}
+<ul class="winkelmandje-lijst">
+    {% for item in winkelmandje %}
+    <li class="winkelmandje-item">
+        <div class="item-info">
+            <span class="item-naam">{{ item.naam }}</span>
+            <span class="item-prijs">€{{ item.prijs }}</span>
+        </div>
+        <form action="?action=updateAantal" method="post" class="aantal-form">
+            <input type="hidden" name="pizzaId" value="{{ item.id }}">
+            <input type="number" name="aantal" value="{{ item.aantal }}" min="1" class="aantal-input">
+            <button type="submit" class="update-knop">Update</button>
+        </form>
+        <a href="?action=verwijder&id={{ item.id }}" class="verwijder-knop">Verwijder</a>
+        <div class="item-totaal">€{{ item.aantal * item.prijs }}</div>
+    </li>
+    {% endfor %}
+</ul>
+<div class="totaal-bedrag">
+    <strong>Totaal:</strong> €{{ totaal|number_format(2, ',', '.') }}
+</div>
+
+{% if isIngelogd %}
+<a href="?action=pizzas&redirect=winkelmandje" class="knop">Verder Winkelen</a><br><br>
+
+
+<a href="index.php?action=afrekenen" class="afrekenen-knop">Afrekenen</a>
+{% else %}
+<div class="afrekenen-keuze">
+    <a href="?action=pizzas&redirect=winkelmandje" class="knop">Verder Winkelen</a><br>
+    <h3>Om verder te gaan met afrekenen:</h3>
+    <a href="?action=login&redirect=winkelmandje" class="knop">Ik heb een account</a>
+    <a href="?action=registreer&redirect=winkelmandje" class="knop">Ik heb geen account</a>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+
+{% extends 'base.twig' %}
+
+{% block content %}
+<!--App/Presentation/pizzas.twig-->
+<h1>Onze Pizza's</h1>
+<div class="pizza-lijst">
+    {% for pizza in pizzas %}
+    <section class="pizza">
+        <img src="./images/{{ pizza.pizzaID }}.png" alt="{{ pizza.naam }}" class="pizza-afbeelding">
+        <h2>{{ pizza.naam }}</h2>
+        <p class="prijs">€{{ pizza.prijs }}</p>
+        <p class="samenstelling">{{ pizza.samenstelling }}</p>
+        <form action="index.php?action=voegToe" method="POST">
+            <input type="hidden" name="action" value="voegToe">
+            <input type="hidden" name="pizzaId" value="{{ pizza.pizzaID }}">
+            <label for="aantal-{{ pizza.pizzaID }}">Aantal:</label>
+            <input type="number" id="aantal-{{ pizza.pizzaID }}" name="aantal" min="0" value="0" class="aantal-input">
+            <button type="submit" class="toevoegen-knop">Toevoegen</button>
+        </form>
+    </section>
+    {% endfor %}
+</div>
+{% endblock %}

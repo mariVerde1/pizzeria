@@ -1,0 +1,594 @@
+<!--App/Presentation/base.twig-->
+
+</html>
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria</title>
+    {# <link href="../styles.css" type="text/css" rel="Stylesheet" /> #}
+   <style>
+    
+    /* Algemene stijlen */
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #060606;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+
+}
+
+.header img {
+    background-image: url("./images/pizzeriaLogo.png");
+    width: 150px;
+    height: 100px;
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    z-index: 2;
+
+
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #060606;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
+.navigatie {
+    background-color: #060606;
+
+    padding: 10px;
+    text-align: center;
+}
+
+.navigatie a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+
+.navigatie a:hover {
+    text-decoration: underline;
+    color: #d35400;
+}
+
+/* Promotie van de week */
+.promotie {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.promotie-foto {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Lijst van pizza's */
+.pizza-lijst {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.pizza-lijst ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pizza-lijst li {
+    margin-bottom: 10px;
+}
+
+.pizza-lijst h3 {
+    margin: 0;
+}
+
+.prijs {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+
+/* Over ons sectie */
+.over-ons {
+    background-color: rgb(4, 4, 4);
+    background-image: url("./images/pizzaBackground.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.over-ons-inhoud {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.over-ons-foto {
+    width: 50%;
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.over-ons a {
+    color: #d35400
+}
+
+.over-ons-tekst {
+    width: 50%;
+    color: #ccc;
+}
+
+/* Login sectie */
+.login {
+    width: 60%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.login label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.login input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login button {
+    background-color: #e67e22;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login button:hover {
+    background-color: #d35400;
+}
+
+/* session login user-info */
+
+.header .user-info {
+    align-items: right;
+
+}
+
+.header .login-link {
+    align-items: right;
+
+}
+
+
+
+/* Registreren sectie */
+.registreren {
+    width: 60%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.registreren label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.registreren input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.registreren button {
+    background-color: #e67e22;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.registreren button:hover {
+    background-color: #d35400;
+}
+
+
+
+
+/* Promotie en pizza-lijst */
+.home-container {
+    display: flex;
+    gap: 20px;
+    /* Ruimte tussen de secties */
+}
+
+/* Promotie sectie */
+.promotie {
+    flex: 1; /*  50% van ruimte */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+}
+
+.promotie-foto {
+    width: 80%;
+    max-width: 80%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Lijst van pizza's */
+.pizza-lijst {
+    flex: 1; /* 50% van ruimte*/
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.pizza-lijst ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pizza-lijst li {
+    margin-bottom: 10px;
+}
+
+.pizza-lijst h3 {
+    margin: 0;
+}
+
+.prijs {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+
+@media (max-width: 600px) {
+    .home-container {
+        flex-direction: column; /* Plaats secties onder elkaar bij kleine schermen */
+    }
+}
+
+/* Pizza stijlen pizzas.twig */
+.pizza-lijst {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.pizza {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+}
+
+.pizza-afbeelding {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.pizza h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.prijs {
+    font-size: 1.2em;
+    color: #e67e22;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.samenstelling {
+    font-size: 0.9em;
+    color: #555;
+    margin: 10px 0;
+}
+
+.aantal-input {
+    width: 60px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.toevoegen-knop {
+    background-color: #e67e22;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.toevoegen-knop:hover {
+    background-color: #d35400;
+}
+
+/*winkelmandje*/
+
+
+.winkelmandje-lijst {
+    list-style: none;
+    padding: 0;
+    max-width: 600px;
+    margin: 0 auto 20px;
+}
+
+.winkelmandje-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.item-info {
+    flex: 2;
+}
+
+.item-naam {
+    font-weight: bold;
+}
+
+.item-prijs {
+    color: #e67e22;
+    margin-left: 10px;
+}
+
+.aantal-form {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.aantal-input {
+    width: 50px;
+    padding: 5px;
+    margin: 0 10px;
+}
+
+.update-knop,
+.verwijder-knop {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.update-knop {
+    background-color: #e67e22;
+    color: white;
+}
+
+.update-knop:hover {
+    background-color: #d35400;
+}
+
+.verwijder-knop {
+    background-color: #e74c3c;
+    color: white;
+    text-decoration: none;
+}
+
+.verwijder-knop:hover {
+    background-color: #c0392b;
+}
+
+.item-totaal {
+    flex: 0 0 80px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.totaal-bedrag {
+    max-width: 600px;
+    margin: 0 auto 20px;
+    text-align: right;
+    font-size: 1.2em;
+}
+
+.afrekenen-knop {
+    display: block;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #e67e22;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+/*bestellingOverzicht*/
+
+.bestelling-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.klant-gegevens,
+.bestelling-details {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.bestelling-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.bestelling-details li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.totaal {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.bevestig-knop {
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bevestig-knop:hover {
+    background-color: #d35400;
+}
+
+.bevestiging-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    
+    .bevestiging-bericht {
+        margin-bottom: 30px;
+    }
+    
+    .bestelling-samenvatting {
+        text-align: left;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    
+    .bestelling-samenvatting ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .bestelling-samenvatting li {
+        padding: 5px 0;
+    }
+    
+    .terug-knop {
+        display: inline-block;
+        background-color: #e67e22;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .terug-knop:hover {
+        background-color: #d35400;
+    }
+</style>
+</head>
+
+<body>
+
+    <header class="header">
+        <img src="./images/pizzeriaLogo.png" alt="logo pizzeria di mari">
+       
+        <h1>Pizzeria Di Mari</h1>
+
+        <nav class="navigatie">
+
+            <a href="index.php?action=home">Home</a>
+            <a href="index.php?action=overOns">Over Ons</a>
+            <a href="index.php?action=pizzas">Pizza's</a>
+            <a href="index.php?action=login">Login</a>
+            <a href="index.php?action=winkelmandje">Winkelmandje</a>
+        </nav>
+        
+    </header>
+
+
+    <main>
+        
+        {% if isIngelogd %}
+        <div class="user-info">
+            Je bent ingelogd 
+            <a href="index.php?action=uitloggen">Uitloggen</a>
+        </div>
+        {% else %}
+        <div class="login-link">
+            <a href="index.php?action=login">Inloggen</a>
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Pizzeria Di Mari. Alle rechten voorbehouden.</p>
+    </footer>
+</body>
+
+</html>
